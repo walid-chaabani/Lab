@@ -1,0 +1,13 @@
+- hosts: 192.168.205.10
+  tasks:
+  - name: Ansible register variable basic example
+    shell: "find *.log"
+    args:
+      chdir: "/var/log"
+    register: find_output
+
+  - shell: "cp {{ item }} /tmp/{{ item }}_bkp"
+    args:
+      chdir: "/var/log"
+    with_items:
+      - "{{ find_output.stdout_lines }}"
